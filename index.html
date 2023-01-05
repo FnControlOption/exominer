@@ -11,11 +11,7 @@
       const response = await fetch('exominer.json')
       data = await response.json()
       for (const name0 of Object.keys(data)) {
-        data[name0] = data[name0].map(input => {
-          let [, name, amount] = input.match(/^(.+) x(\d+)$/)
-          amount = parseInt(amount)
-          return {name, amount}
-        })
+        data[name0] = data[name0].map(parseInput)
       }
     }
   }
@@ -30,15 +26,21 @@
     return depth + 1
   }
 
+  function parseInput(input) {
+    let match = input.match(/^(.+) x(\d+)$/)
+    if (!match)
+      return null
+    let [, name, amount] = match
+    amount = parseInt(amount)
+    return {name, amount}
+  }
+
   async function submit() {
     await loadData()
     let target = document.querySelector('#input').value
     let targetAmount = 1
-    const match = target.match(/^(.+) x(\d+)$/)
-    if (match) {
-      [, target, targetAmount] = match
-      targetAmount = parseInt(targetAmount)
-    }
+    const match = parseInput(target)
+    if (match) ({name: target, amount: targetAmount} = match)
     let inputAmounts = {}
     function build(name0, amount0) {
       for (let {name, amount} of data[name0]) {
