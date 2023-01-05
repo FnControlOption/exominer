@@ -10,6 +10,13 @@
     if (!data) {
       const response = await fetch('exominer.json')
       data = await response.json()
+      for (const name0 of Object.keys(data)) {
+        data[name0] = data[name0].map(input => {
+          let [, name, amount] = input.match(/^(.+) x(\d+)$/)
+          amount = parseInt(amount)
+          return {name, amount}
+        })
+      }
     }
   }
 
@@ -17,8 +24,7 @@
     if (data[name0].length == 0)
       return 0
     let depth = 0
-    for (const input of data[name0]) {
-      let [, name,] = input.match(/^(.+) x(\d+)$/)
+    for (const {name} of data[name0]) {
       depth = Math.max(depth, depthOf(name))
     }
     return depth + 1
@@ -35,10 +41,8 @@
     }
     let inputAmounts = {}
     function build(name0, amount0) {
-      for (const input of data[name0]) {
-        let [, name, amount] = input.match(/^(.+) x(\d+)$/)
-        amount = amount0 * parseInt(amount)
-        // console.log(name, amount)
+      for (let {name, amount} of data[name0]) {
+        amount *= amount0
         if (!inputAmounts.hasOwnProperty(name))
           inputAmounts[name] = 0
         inputAmounts[name] += amount
@@ -46,16 +50,13 @@
       }
     }
     build(target, targetAmount)
-    // console.log(inputAmounts)
     let inputDepths = {}
-    let maxDepth = -1
     for (const name of Object.keys(data)) {
       if (inputAmounts.hasOwnProperty(name)) {
         let depth = depthOf(name)
         if (!inputDepths.hasOwnProperty(depth))
           inputDepths[depth] = []
         inputDepths[depth].push(name)
-        maxDepth = Math.max(depth, maxDepth)
       }
     }
     let lines = [`${target} x${targetAmount}`]
