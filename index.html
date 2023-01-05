@@ -1,0 +1,76 @@
+<input id="input" type="text" value="superior constructing" style="width: 20%;">
+<button onclick="submit()">Submit</button>
+<br>
+<br>
+<textarea id="output" style="width: 100%; height: 90%;"></textarea>
+<script>
+  let data = null
+
+  async function loadData() {
+    if (!data) {
+      const response = await fetch('exominer.json')
+      data = await response.json()
+    }
+  }
+
+  function depthOf(name0) {
+    if (data[name0].length == 0)
+      return 0
+    let depth = 0
+    for (const input of data[name0]) {
+      let [, name,] = input.match(/^(.+) x(\d+)$/)
+      depth = Math.max(depth, depthOf(name))
+    }
+    return depth + 1
+  }
+
+  async function submit() {
+    await loadData()
+    let target = document.querySelector('#input').value
+    let targetAmount = 1
+    const match = target.match(/^(.+) x(\d+)$/)
+    if (match) {
+      [, target, targetAmount] = match
+      targetAmount = parseInt(targetAmount)
+    }
+    let inputAmounts = {}
+    function build(name0, amount0) {
+      for (const input of data[name0]) {
+        let [, name, amount] = input.match(/^(.+) x(\d+)$/)
+        amount = amount0 * parseInt(amount)
+        // console.log(name, amount)
+        if (!inputAmounts.hasOwnProperty(name))
+          inputAmounts[name] = 0
+        inputAmounts[name] += amount
+        build(name, amount)
+      }
+    }
+    build(target, targetAmount)
+    // console.log(inputAmounts)
+    let inputDepths = {}
+    let maxDepth = -1
+    for (const name of Object.keys(data)) {
+      if (inputAmounts.hasOwnProperty(name)) {
+        let depth = depthOf(name)
+        if (!inputDepths.hasOwnProperty(depth))
+          inputDepths[depth] = []
+        inputDepths[depth].push(name)
+        maxDepth = Math.max(depth, maxDepth)
+      }
+    }
+    let lines = [`${target} x${targetAmount}`]
+    for (const depth of Object.keys(inputDepths)) {
+      lines.push('')
+      lines.push('---')
+      lines.push('')
+      for (const name of inputDepths[depth]) {
+        const amount = inputAmounts[name]
+        lines.push(`- [ ] ${name} x${amount}`)
+      }
+    }
+    console.log(inputDepths)
+    document.querySelector('#output').value = lines.join("\n")
+  }
+
+  submit()
+</script>

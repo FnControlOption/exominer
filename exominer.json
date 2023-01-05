@@ -1,0 +1,133 @@
+{
+  "carbon": [
+
+  ],
+  "tin": [
+
+  ],
+  "cobalt": [
+
+  ],
+  "bismuth": [
+
+  ],
+  "cerussite": [
+
+  ],
+  "manganese": [
+
+  ],
+  "einherjer": [
+
+  ],
+  "kriptonite": [
+
+  ],
+  "coreium": [
+
+  ],
+  "refined carbon": [
+    "carbon x800"
+  ],
+  "refined tin": [
+    "tin x800"
+  ],
+  "refined cobalt": [
+    "cobalt x800"
+  ],
+  "refined bismuth": [
+    "bismuth x800"
+  ],
+  "refined cerussite": [
+    "cerussite x800"
+  ],
+  "refined manganese": [
+    "manganese x800"
+  ],
+  "refined einherjer": [
+    "einherjer x800"
+  ],
+  "manganese alloy": [
+    "refined manganese x1",
+    "refined carbon x8"
+  ],
+  "cobalt alloy": [
+    "refined cobalt x12",
+    "refined tin x24"
+  ],
+  "kriptonite alloy": [
+    "refined einherjer x1",
+    "kriptonite x800"
+  ],
+  "coreium alloy": [
+    "manganese alloy x1",
+    "coreium x800"
+  ],
+  "cables": [
+    "refined carbon x4"
+  ],
+  "fuse": [
+    "refined tin x4"
+  ],
+  "heat sensor": [
+    "cables x1",
+    "refined carbon x8"
+  ],
+  "ball bearing": [
+    "fuse x1",
+    "refined cobalt x4"
+  ],
+  "glass": [
+    "refined bismuth x8"
+  ],
+  "circuit": [
+    "refined cerussite x4",
+    "refined bismuth x4",
+    "cables x8"
+  ],
+  "lense": [
+    "glass x1",
+    "refined manganese x4"
+  ],
+  "laser optic": [
+    "refined einherjer x4",
+    "refined tin x8",
+    "lense x1"
+  ],
+  "mini rover": [
+    "refined manganese x4",
+    "circuit x4",
+    "ball bearing x3"
+  ],
+  "solar panel": [
+    "circuit x4",
+    "glass x8"
+  ],
+  "laser blaster": [
+    "manganese alloy x4",
+    "laser optic x1",
+    "lense x4"
+  ],
+  "advanced sensors": [
+    "cobalt alloy x16",
+    "heat sensor x24"
+  ],
+  "surface scanner": [
+    "kriptonite alloy x4",
+    "laser optic x1",
+    "glass x4"
+  ],
+  "planet explorer": [
+    "coreium alloy x4",
+    "mini rover x4"
+  ],
+  "refined specialist": [
+    "mini rover x5",
+    "advanced sensors x2"
+  ],
+  "superior constructing": [
+    "surface scanner x2",
+    "advanced sensors x10",
+    "laser blaster x20"
+  ]
+}
